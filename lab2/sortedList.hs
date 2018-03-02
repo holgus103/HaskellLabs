@@ -24,3 +24,10 @@ avg list =
             where
                 (c, s) = loopOverList n
         (count, sum) = loopOverList list
+
+
+fltr :: (Ord a) => (a -> Bool) -> Element a -> Element a
+
+fltr f Nil = Nil
+fltr f (Value x n) = 
+    if f x then add (fltr f n) x else fltr f n

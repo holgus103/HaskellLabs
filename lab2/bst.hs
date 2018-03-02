@@ -66,3 +66,13 @@ remove n@(Node x left right) val
     | val == x = Node nv left $ remove right nv
         where
             (Node nv _ _) = findSuccessor n
+
+
+count Nil = 0
+count (Node x left right) = 
+    (seq rest 1)  + rest 
+    where 
+        rest = count left + count right;
+
+
+        

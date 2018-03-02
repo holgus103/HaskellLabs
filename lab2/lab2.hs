@@ -35,5 +35,9 @@ scale (Line x1 y1 x2 y2) s =
         x = x1 + (x2 - x1) * s
         y = y1 + (y2 - y1) * s
 
--- zad 3
+-- zad 8
+
+data Expression = 
+    Sum Expression Expression |
+     Value Double Expression Expression  
 
