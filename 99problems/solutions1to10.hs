@@ -1,4 +1,4 @@
-module Solutions where
+module Solutions1to10 where
 -- problem 1
 -- last list element
 
@@ -98,7 +98,7 @@ compress l =
 -- sublist packing
 
 pack l = 
-    current:res
+    init $ current:res
     where 
         folder e (sum, last, current) 
             | e == last = (sum, last, e:current)
@@ -110,7 +110,7 @@ pack l =
 -- kawaii compression
 
 encode l = 
-    (count, last):res
+    init $ (count, last):res
     where 
         folder e (acc, last, count)
             | e == last = (acc, last, count + 1)
