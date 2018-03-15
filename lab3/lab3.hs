@@ -94,10 +94,45 @@ eratostenes n =
 -- zad 8 
 data Numb = Zero | Succ Numb
 
-instance (Show a) => Show (Numb a) where
-    show Zero  = "0"
-    show Succ a = "0" ++ show a
+-- instance Show (Numb) where
+--     show Zero = ""
+--     show (Succ a) = "0" ++ show a
 
+helper Zero = 0
+helper (Succ a) = 
+    1 + seq (1 + helper a) (helper a)
+
+instance Show (Numb) where
+    show Zero = "0"
+    show (Succ a) = show $ 1 + helper a 
+
+
+-- zad 9 
+myFoldl :: (a -> b -> a) -> a -> [b] -> a
+myFoldl _ state [] = state
+myFoldl folder init (l:lx) = 
+    myFoldl folder (folder init l) lx
+
+
+myFoldr :: (a -> b -> a) -> a -> [b] -> a
+myFoldr folder init [] = init;
+myFoldr folder init (l:lx) = 
+    folder (myFoldr folder init lx) l 
+
+
+myFoldl' :: (a -> b -> a) -> a -> [b] -> a
+myFoldl' folder init (l:lx) = 
+    seq (folder init l) (myFoldl folder (folder init l) lx)
+
+
+-- zad 10
+--take 5 $ myfilter ((== 0) . (`mod` 2)) [1,2..] 
+myFilter predicate l = 
+    foldr folder [] l
+    where 
+        folder e acc = 
+            if predicate e then e:acc
+            else acc
 
 -- laborki punktowane:
 -- typ danych
