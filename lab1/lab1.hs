@@ -67,15 +67,14 @@ mySqrt x eps =
             
                 
 
--- sinTaylorLooped x n = 
---     looper n
---     where 
---         helper acc _ 0 = 
---             acc
---         helper acc f i =
-         
---            where
---            newF = f * (-1) * x * x / (2 * n + 1) / (2*n)
-
-        
-    
+sinTaylorLooped x n = 
+    helper x x (n-1)
+    where 
+        helper sum previous 0 = 
+                sum
+        helper sum previous i = 
+                helper sum1 val1 (i-1)
+                where 
+                    n1 = n - i
+                    val1 = -1.0/(2* n1) / (2 * n1 + 1) * previous * x * x; 
+                    sum1 = sum + val1
