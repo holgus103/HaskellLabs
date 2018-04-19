@@ -4,6 +4,7 @@ import Data.Char
 import Data.List
 import System.IO.Error
 import System.IO
+import Text.Read
 import Control.Applicative
 import Control.Monad
 -- zad 1
@@ -138,3 +139,60 @@ grepWithFiles path i =
                     if isPrefixOf i line then putStrLn line else return ()
 
 
+-- zad 6
+exercise6 :: IO [Double]
+exercise6 = 
+    getLine >>= process
+    where 
+        process :: String -> IO [Double]
+        process line = 
+            case parseList line of 
+                Nothing -> return [fromIntegral $ length line]
+                Just x -> return [fromIntegral $maximum x, fromIntegral $ minimum x, (fromIntegral $ sum x) / (fromIntegral $ length x)]
+
+        
+
+parseList ::  [Char] -> Maybe [Int]
+parseList l =
+    if any func parsed then Nothing else sequence parsed
+    where
+        numbers = splitList l
+        parsed :: [Maybe Int]
+        parsed = map readMaybe numbers
+        func Nothing = True
+        func _ = False 
+
+splitList :: [Char] ->  [String]
+splitList l = 
+    element:list
+    where
+        folder :: ([String], [Char]) -> Char -> ([String], [Char])
+        folder (output, current) e = 
+            if e == ',' then (current:output, "")
+            else (output, current ++ [e])
+        (list, element) = foldl folder ([], "") l
+
+
+-- zad 7 
+
+sortMain :: [Int] -> [Int]
+sortMain l = do {   
+    first <- l;
+    mySort [first] $ delete first l
+}
+
+
+mySort :: [Int] -> [Int] -> [Int]
+
+mySort l [] = l;  
+
+mySort (l:lx) res = do {
+    first <- res;
+    if first <= l then mySort (first:l:lx) (delete first res)
+    else []
+
+}
+
+
+
+        
